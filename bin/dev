@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+def system!(*args)
+  system(*args, exception: true)
+end
+
+system("RUBY_DEBUG_OPEN=true bundle exec rails s")
