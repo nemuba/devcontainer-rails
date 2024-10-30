@@ -1,24 +1,63 @@
-# README
+# DevContainer Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Este projeto configura um ambiente de desenvolvimento para uma aplicação Rails usando DevContainers.
 
-Things you may want to cover:
+## Ruby Version
+- Ruby 3.1.0
 
-* Ruby version
+## System Dependencies
+- Docker
+- Docker Compose
 
-* System dependencies
+## Configuration
+1. Clone o repositório:
+   ```sh
+   git clone https://github.com/nemuba/devcontainer-rails.git
+   cd devcontainer-rails
+   ```
 
-* Configuration
+2. Configure variáveis de ambiente:
+   Crie um arquivo `.env` com as variáveis necessárias.
 
-* Database creation
+## Database Creation
+1. Inicie os containers:
+   ```sh
+   docker-compose up -d
+   ```
 
-* Database initialization
+2. Crie o banco de dados:
+   ```sh
+   docker-compose exec app bundle exec rake db:create
+   ```
 
-* How to run the test suite
+## Database Initialization
+1. Rode as migrações:
+   ```sh
+   docker-compose exec app bundle exec rake db:migrate
+   ```
 
-* Services (job queues, cache servers, search engines, etc.)
+2. Popule o banco de dados com dados iniciais (se aplicável):
+   ```sh
+   docker-compose exec app bundle exec rake db:seed
+   ```
 
-* Deployment instructions
+## How to Run the Test Suite
+1. Execute os testes:
+   ```sh
+   docker-compose exec app bundle exec rspec
+   ```
 
-* ...
+## Services
+- Servidor Redis para filas de trabalho
+- Memcached para cache
+
+## Deployment Instructions
+1. Compile os assets:
+   ```sh
+   docker-compose exec app bundle exec rake assets:precompile
+   ```
+
+2. Inicie o servidor em modo produção:
+   ```sh
+   docker-compose -f docker-compose.prod.yml up -d
+   ```
